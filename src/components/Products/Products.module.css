@@ -1,0 +1,174 @@
+.productswrapper {
+    padding-top: 98px;
+    animation: 'slideUp 300ms linear';
+    animation-delay: 150ms;
+    padding-left: 190px;
+    padding-right: 0px;
+  
+}
+    @media (max-width: 991px) {
+      .productswrapper {
+      padding-top: 68px;
+      
+    }
+  }
+    @media (max-width: 480px) {
+      .productswrapper {
+        padding-top: 52px;
+        
+      }
+    }
+  
+  .products {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    padding: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+    @media (max-width: 768px) {
+      .products{
+      padding: 8px;
+    }
+  }
+  .product {
+    background: white;
+    margin: 16px;
+    width: 200px;
+    border-radius: 2px;
+}
+      @media (max-width: 768px) {
+        .product{
+        flex-basis: calc(33% - 16px);
+        -webkit-flex-basis: calc(33% - 16px);
+        margin: 8px;
+      }
+    }
+    
+      @media (max-width: 480px) {
+        .product{
+        flex-basis: calc(50% - 16px);
+        -webkit-flex-basis: calc(50% - 16px);
+        min-height: 313px;
+        }
+        .productname {
+          height: 20px;
+          overflow: hidden;
+        }
+        .productaction {
+          padding: 16px 8px;
+        }
+      }
+      @media (max-width: 320px) {
+        .product{
+        flex-basis: 100%;
+        -webkit-flex-basis: 100%;
+      }
+      }
+  
+  
+
+  
+  
+  .product.loading {
+    animation-duration: 600ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: contentLoader;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 1000px 104px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .productimage  img {
+    cursor: zoom-in;
+    width: 100%;
+    height: auto;
+    transition:'transform 300ms ease-in';
+    transform: scale(1);
+}
+    @media (min-width: 991px) {
+      .productimage  img{
+      min-height: 110px;
+    }
+  
+  .productimage  img:hover {
+      transform: scale(1.1);
+    }
+  
+}
+.productname {
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 10px;
+  margin-bottom: 4px;
+}
+.productprice {
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 8px;
+  margin-bottom: 10px;
+}
+  .productprice:before {
+    content: "₹ ";
+  
+}
+.productname,
+.productprice {
+  color: gray;
+  /* padding: 0 5px; */
+  text-align: center;
+}
+    .producttext,
+    .productbutton {
+      margin: 12px 16px;
+      height: 16px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .productbutton {
+      position: absolute;
+      bottom: 8px;
+      width: 168px;
+      height: 36px;
+      text-align: center;
+    }
+      @media (max-width: 768px) {
+        .productbutton{
+        width: auto;
+      }
+    }
+  
+  @keyframes contentLoader {
+    0% {
+      background-position: -420px 0;
+    }
+    100% {
+      background-position: 420px 0;
+    }
+  }
+  
+
+  .no-results {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+    .no-results img {
+      width: 320px;
+      margin: 16px 0 32px 0;
+      opacity: 0.33;
+    }
+    h2 {
+      margin-bottom: 16px;
+      color: #666;
+    }
+    p {
+      color: #999;
+    }
+  
+  

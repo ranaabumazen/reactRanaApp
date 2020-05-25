@@ -1,0 +1,25 @@
+.root {
+    display: flex
+  }
+ .appBar{
+    z-index: 100;
+    background-color:purple
+  }
+  .drawer{
+    width:240;
+    flex-shrink: 0;
+   z-index:90
+  }
+  .drawerPaper{
+    width: 240;
+    z-index:90
+  }
+  .drawerContainer{
+    overflow: auto;
+    color: purple;
+    z-index:90
+  }
+  .content {
+    flex-grow: 1;
+    padding:3
+  }
