@@ -6,8 +6,6 @@ import TableHead from '@material-ui/core/TableHead';
 import Paper from "@material-ui/core/Paper";
 import TableRow from "@material-ui/core/TableRow";
 import axios from 'axios';
-import Button from "@material-ui/core/Button";
-import Modal from '@material-ui/core/Modal';
 import Order from './Order';
 
 class EnhancedTable extends Component {
@@ -28,7 +26,6 @@ constructor(props){
           keys:[],
     };
     this.handleOpen=this.handleOpen.bind(this);
-   // this.handleReject=this.handleReject.bind(this);
 }
 
 componentDidMount(){
@@ -49,22 +46,13 @@ componentDidMount(){
          k.push({key,id:response.data[key].id});
 
       }
-      const order={
-        orders:ord
-      }
       console.log(ord)
-      // for(let i=0;i<Object.keys(order).length;i++){
-      //   for(let j;j<Object.keys(order.orders).length;j++)
-      //   console.log(order.orders);
-      // }
       console.log(k);
-     
-      //console.log(order);
       this.setState({orders:ord.map(item=>{
-          // {orderitem.orders.map(item =>{
             return(
               <Order
               keys={k}
+              key={item.key}
               orders={item.orders}
               id={item.key}
               status={item.status}
@@ -72,13 +60,10 @@ componentDidMount(){
               userAddress={item.userAddress}
               userPhone={item.userPhone}
               userName={item.userName}
-          
-              />)
-          // })}
-    
+              />
+              )
       })});
       this.setState({keys:k});
-     // console.log(order)
     }).catch(err=>console.log(err));
 }
 
@@ -97,7 +82,6 @@ render() {
 return (
 
 <div>  
-
     <Paper className="container">
       <Table>
         <TableHead>
@@ -105,28 +89,24 @@ return (
             <TableCell> Name</TableCell>
             <TableCell >Shape</TableCell>
             <TableCell>Price</TableCell>
-            <TableCell>Status</TableCell>
             <TableCell>Category</TableCell>
             <TableCell>User Name</TableCell>
             <TableCell>User Email</TableCell>
-           
             <TableCell>User Phone</TableCell>
             <TableCell>User Address</TableCell>
+            <TableCell>Reject Order</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-        <React.Fragment>
-          {this.state.orders ? this.state.orders : <p>Loading</p>}
-        </React.Fragment>
+             <React.Fragment>
+                   {this.state.orders ? this.state.orders : <p>Loading</p>}
+             </React.Fragment>
         </TableBody>
       </Table>
-     
     </Paper>
-
-
 </div>
 
-        );
+ );
     }
 }
 

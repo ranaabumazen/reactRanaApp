@@ -24,7 +24,6 @@ import Login from '../../../containers/Login/Login';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import Person from "@material-ui/icons/Person";
-
 import {   Link,Switch} from "react-router-dom";
 import Products from '../../Products/Products';
 import Add from '../../Products/AddProduct/Add';
@@ -208,7 +207,15 @@ export default function PermanentDrawerLeft() {
         <div className={classes.toolbar} style={{backgroundColor:'white'}}/> 
 
         <Switch>
-            <Route path="/Admin/Profile" render={() => <div>Welcome to your Profile</div>} /> 
+            <Route path="/Admin/Profile" render={() => <center>
+                                                          <div>
+                                                            <h2>Welcome to your Profile</h2>
+                                                            <h2>Not Completed Yet !</h2>
+                                                          </div>
+                                                        </center>
+                                                } 
+                                      
+            /> 
             <Route path="/Admin/Products" render={() => <div><Products/></div>} /> 
            
            

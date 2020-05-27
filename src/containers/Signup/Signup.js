@@ -72,8 +72,7 @@ class SignUp extends Component {
             returnSecureToken: true
         };
         let  url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDlF1qo3YCLDEB1kHbcr-zpmUUI7DB7bC0';
-        axios .post(url,authData).
-          then(response =>{
+        axios.post(url,authData).then(response =>{
             console.log(response.data.email);
             
           }).catch(error =>{

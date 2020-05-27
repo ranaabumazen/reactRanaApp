@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
 
+import React, { Component } from 'react';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import Grid from "@material-ui/core/Grid";
-
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -14,13 +12,15 @@ import Button from '@material-ui/core/Button';
 import User from '../Client/Client';
 import { Redirect, Router, Route, Switch } from "react-router-dom";
 import ReactDOM from 'react-dom';
-
 import Hist from '../../index';
 import axios from '../../instanceaxios';
+
+
 
 class ContactData extends Component {
     constructor(props) {
         super(props);
+        this._isMounted = false;
         this.state = {
             formData: {
                 email: '',
@@ -30,51 +30,50 @@ class ContactData extends Component {
                 country: ''
             },
             submitted: false,
-            //redirectPath:'/Login',
             orders: [],
             price: '',
             username: '',
             ord:[]
         }
-
+      
+          
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.checkoutCancelledHandler = this.checkoutCancelledHandler.bind(this);
         this.orderHandler = this.orderHandler.bind(this);
+        
     }
 
 
     emailRef = React.createRef();
-
     nameRef = React.createRef();
     phoneRef = React.createRef();
     countryRef = React.createRef();
 
 
 
-    handleBlur = (event) => {
+    handleBlur = (event) => 
+    {
         this.emailRef.current.validate(event.target.value);
-
     }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+      }
+
+
+
     handleChange = (event) => {
         const { formData } = this.state;
         formData[event.target.name] = event.target.value;
         this.setState({ formData });
     }
+
+
+
     orderHandler = (event) => {
         event.preventDefault();
-        let ord=[];
-          this.props.orders.map(function(order){
-              ord.push({
-                image:order.image,
-                price:order.price,
-                quantity:order.quantity,
-                name:order.name,
-            
-                  
-              })
-            })
-          this.setState({ord:this.props.orderss});
+       
         const order = {
             orders:this.props.orderss,
             status:'Pending',
@@ -90,15 +89,15 @@ class ContactData extends Component {
             },
 
         }
-      //  console.log(order.orders)
+    
         console.log(order);
-        axios.post('/Ords.json', order)
-            .then(response => {
+        axios.post('/Ords.json', order).then(response => {
                 alert('Your order is submitted');
+                alert(this.props.username)
                 const routes = (
                     <Switch>
 
-                        <Redirect to={"/User/" + this.props.username} />;
+                        <Redirect to={"/User/"+this.props.username} />;
 
                     </Switch>
                 );
@@ -112,19 +111,32 @@ class ContactData extends Component {
                     )
                 );
 
-                //this.props.history.push('/');
-            })
-            .catch(error => {
+            }).catch(error => {
+                const routes = (
+                    <Switch>
 
+                        <Redirect to={"/User/"+this.props.username} />;
+
+                    </Switch>
+                );
+                return (
+                    ReactDOM.render(
+                        <Router history={Hist}>
+                            <Route path="/User/:username" component={User} />
+                            {routes}
+                        </Router>,
+                        document.getElementById("root")
+                    )
+                );
             });
 
     }
     checkoutCancelledHandler() {
-        //alert("/User/"+this.props.username);
+     
         const routes = (
             <Switch>
 
-                <Redirect to={"/User/" + this.props.username} />;
+                <Redirect to={"/User/"+this.props.username} />;
 
             </Switch>
         );
@@ -143,10 +155,8 @@ class ContactData extends Component {
     render() {
         const style = {
             height: 450,
-
             marginBottom: 100,
             width: 400,
-
             display: 'block'
         };
 
@@ -173,12 +183,13 @@ class ContactData extends Component {
 
         const { formData, submitted } = this.state;
 
+
         return (
             <center>
                 <p>Please go down of this page to finish the order  </p>
                 {this.props.orders ?
                     (this.props.orders.map(order => (
-                        <div
+                        <div key={order.id}
                             style={{
                                 paddingTop: '10px',
                                 animation: 'slideUp 300ms linear',
@@ -190,7 +201,7 @@ class ContactData extends Component {
 
                             }}
                         >
-                            <Card style={{
+                            <Card  style={{
                                 background: 'white',
                                 margin: '8px',
                                 width: '100%',
@@ -213,7 +224,7 @@ class ContactData extends Component {
 
 
                                     <CardContent>
-                                        <Typography gutterBottom variant="h7" component="h2"
+                                        <Typography gutterBottom variant="h5" component="h2"
                                             className={classes.productname}>
                                             {order.name}
                                         </Typography>
@@ -252,9 +263,9 @@ class ContactData extends Component {
                     <p style={style2}>Enter your Contact Data </p>
 
                     <ValidatorForm
-                        ref="form"
-                        // onSubmit={this.onRegister}
-                        instantValidate={false}
+                       // ref="form"
+                        onSubmit={this.orderHandler}
+                       // instantValidate={false}
                     >
                         <Grid item>
                             <TextValidator
@@ -264,10 +275,10 @@ class ContactData extends Component {
                                 variant="outlined"
                                 onChange={this.handleChange}
                                 style={style1}
-                                required
+                               // required
                                 value={formData.name}
-                                validators={['required']}
-                                errorMessages={['this field is required']}
+                                //validators={['required']}
+                                //errorMessages={['this field is required']}
                                 ref={this.nameRef}
 
                             />
@@ -286,10 +297,9 @@ class ContactData extends Component {
                                 onChange={this.handleChange}
                                 onBlur={this.handleBlur}
                                 style={style1}
-                                required
+                                
                                 value={formData.email}
-                                validators={['required', 'isEmail']}
-                                errorMessages={['this field is required', 'email is not valid']}
+                              
                             />
                         </Grid>
 
@@ -304,12 +314,10 @@ class ContactData extends Component {
                                 type="numeric"
                                 variant="outlined"
                                 onChange={this.handleChange}
-
                                 style={style1}
-                                required
+                                
                                 value={formData.phone}
-                                validators={['required']}
-                                errorMessages={['this field is required']}
+                              
                             />
                         </Grid>
 
@@ -323,10 +331,9 @@ class ContactData extends Component {
                                 variant="outlined"
                                 onChange={this.handleChange}
                                 style={style1}
-                                required
+                               
                                 value={formData.country}
-                                validators={['required']}
-                                errorMessages={['this field is required']}
+                               
                                 ref={this.countryRef}
 
                             />
@@ -339,7 +346,6 @@ class ContactData extends Component {
 
                         <Grid item>
                             <Button
-
                                 variant="contained"
                                 color="primary"
                                 style={style1}
@@ -362,10 +368,9 @@ class ContactData extends Component {
                                 color="primary"
                                 style={style1}
                                 onClick={this.checkoutCancelledHandler}
-
                             >
                                 CANCEL
-                    </Button>
+                            </Button>
                         </Grid>
                         <br />
                         <br />

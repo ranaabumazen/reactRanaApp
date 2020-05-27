@@ -52,9 +52,7 @@ class log extends Component {
         };
             axios.post(url,authData).then(response =>{
           console.log(response.data.email);
-            }).
-         
-          catch(error => {
+            }).catch(error => {
               console.log(error);
           })
             // 
@@ -96,9 +94,7 @@ class log extends Component {
                             document.getElementById("root")
                   )
             );
-              }).
-           
-            catch(error => {
+              }).catch(error => {
                 alert('error useremail/password not valid please try again or signup if you dont have an account ');
                 //console.log(error);
                 path=<Redirect to="/Signup"/>;

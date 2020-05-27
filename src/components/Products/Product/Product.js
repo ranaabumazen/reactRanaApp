@@ -16,7 +16,7 @@ class Product extends Component {
 
   constructor(props) {
     super(props);
-
+    this._isMounted = false;
     this.state = {
       selectedProduct: {},
       quickViewProduct: {},
@@ -76,7 +76,7 @@ class Product extends Component {
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
 
-      let index = cartItem.findIndex(x => x.id == productID);
+      let index = cartItem.findIndex(x => x.id === productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
       this.setState({
@@ -101,15 +101,9 @@ class Product extends Component {
       1000
     );
 
-    axios.post('/cart.json',
-      selectedProducts);
-
-
+    axios.post('/cart.json', selectedProducts);
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
-
-
-
   }
 
 
@@ -127,6 +121,10 @@ class Product extends Component {
       totalItems: total
     });
   }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   sumTotalAmount() {
     let total = 0;
     let cart = this.state.cart;
@@ -253,9 +251,6 @@ class Product extends Component {
           {body}
 
         </Modal>
-        <div style={{ display: 'none' }}>
-          {/* <Cart  products = {this.state} /> */}
-        </div>
       </React.Fragment>
 
     );
